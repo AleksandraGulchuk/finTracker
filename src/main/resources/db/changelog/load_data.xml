@@ -1,0 +1,20 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="load income_categories" labels="data" author="user" >
+        <loadData file="db/data/income_categories.csv"
+                  tableName="income_category">
+            <column name="id" header="id" />
+            <column name="name" header="name"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet id="load expense_categories" labels="data" author="user" >
+        <loadData file="db/data/expense_categories.csv"
+                  tableName="expense_category">
+            <column name="id" header="id" />
+            <column name="name" header="name"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,89 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create_table_user_account" author="user">
+        <createTable tableName="user_account">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="text">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="password" type="text">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_expense_category" author="user">
+        <createTable tableName="expense_category">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_expense" author="user">
+        <createTable tableName="expense">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="amount" type="numeric">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="true" />
+            </column>
+            <column name="user_account_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_expense_user_account" references="user_account(id)"/>
+            </column>
+            <column name="expense_category_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_expense_expense_category" references="expense_category(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_income_category" author="user">
+        <createTable tableName="income_category">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_income" author="user">
+        <createTable tableName="income">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="amount" type="numeric">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="true" />
+            </column>
+            <column name="user_account_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_expense_user_account" references="user_account(id)"/>
+            </column>
+            <column name="income_category_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_income_income_category" references="income_category(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
