@@ -11,7 +11,7 @@
 	<groupId>org.nure</groupId>
 	<artifactId>fintracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>fintracker</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
