@@ -8,10 +8,12 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class RowDto {
+public class TransactionDto {
 
+    private String type;
+    private String category;
     private LocalDate date;
     private BigDecimal amount;
     private String description;
-    private String category;
+
 }

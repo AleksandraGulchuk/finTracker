@@ -13,8 +13,6 @@ public class DashboardDto {
     private BigDecimal expenseAmount;
     private BigDecimal incomeAmount;
     private BigDecimal balance;
-
-    List<RowDto> expenses;
-    List<RowDto> incomes;
+    private List<TransactionDto> transactions;
 
 }

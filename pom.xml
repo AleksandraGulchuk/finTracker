@@ -13,7 +13,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fintracker</name>
-	<description>Demo project for Spring Boot</description>
+	<description>The FinTracker project provides users a platform
+		to track their income and expenses, categorize their
+		financial data, and generate reports.</description>
 	<url/>
 	<licenses>
 		<license/>

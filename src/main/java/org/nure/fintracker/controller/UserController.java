@@ -18,11 +18,6 @@ public class UserController {
 
     private final UserService service;
 
-//    @GetMapping("/{id}")
-//    public UserAccount read(@PathVariable(name = "id") UUID id) {
-//        return service.find(id);
-//    }
-
     @PostMapping("/signup")
     public UUID register(@RequestBody UserDto user) {
         return service.create(user);
