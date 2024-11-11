@@ -1,7 +1,7 @@
 package org.nure.fintracker.servise;
 
-import org.nure.fintracker.dto.user.UserDto;
 import org.nure.fintracker.dto.user.UserLoginDto;
+import org.nure.fintracker.dto.user.UserSetupDto;
 import org.nure.fintracker.entity.UserAccount;
 import org.nure.fintracker.exception.EntityAlreadyExistsException;
 import org.nure.fintracker.exception.EntityNotFoundException;
@@ -21,14 +21,14 @@ public class UserService {
     private UserMapper userMapper;
 
 
-    public UUID create(UserDto userDto) {
+    public UUID create(UserSetupDto userSetupDto) {
         boolean present = userAccountRepository
-                .findByEmail(userDto.getEmail())
+                .findByEmail(userSetupDto.getEmail())
                 .isPresent();
         if (present) {
-            throw new EntityAlreadyExistsException("User with email: " + userDto.getEmail() + " already exists");
+            throw new EntityAlreadyExistsException("User with email: " + userSetupDto.getEmail() + " already exists");
         }
-        UserAccount user = userMapper.createUserFromDto(userDto);
+        UserAccount user = userMapper.createUserFromDto(userSetupDto);
         return userAccountRepository.save(user).getId();
     }
 
