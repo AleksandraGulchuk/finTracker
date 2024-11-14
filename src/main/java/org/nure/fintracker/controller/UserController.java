@@ -24,7 +24,7 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/signup")
-    public UUID register(@Valid @RequestBody UserSetupDto user) {
+    public UUID register(@RequestBody UserSetupDto user) {
         return service.create(user);
     }
 
