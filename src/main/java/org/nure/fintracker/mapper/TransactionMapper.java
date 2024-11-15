@@ -1,8 +1,11 @@
 package org.nure.fintracker.mapper;
 
 import org.nure.fintracker.dto.TransactionDto;
+import org.nure.fintracker.dto.income.IncomeDto;
 import org.nure.fintracker.entity.Expense;
 import org.nure.fintracker.entity.Income;
+import org.nure.fintracker.entity.IncomeCategory;
+import org.nure.fintracker.entity.UserAccount;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,6 +28,16 @@ public class TransactionMapper {
                 .date(income.getDate())
                 .amount(income.getAmount())
                 .description(income.getDescription())
+                .build();
+    }
+
+    public Income dtoToIncome(IncomeDto dto) {
+        return Income.builder()
+                .userAccount(UserAccount.builder().id(dto.getUserId()).build())
+                .incomeCategory(IncomeCategory.builder().id(dto.getCategoryId()).build())
+                .amount(dto.getAmount())
+                .date(dto.getDate())
+                .description(dto.getDescription())
                 .build();
     }
 

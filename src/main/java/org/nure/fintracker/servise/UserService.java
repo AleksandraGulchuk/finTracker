@@ -38,4 +38,10 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found. Wrong email or password"));
     }
 
+    public void checkUser(UUID id) {
+        userAccountRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User with id: " + id + " not found"));
+    }
+
 }

@@ -2,6 +2,7 @@ package org.nure.fintracker.controller;
 
 import org.nure.fintracker.dto.DashboardDto;
 import org.nure.fintracker.servise.DashboardService;
+import org.nure.fintracker.servise.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,14 @@ import java.util.UUID;
 public class DashboardController {
 
     @Autowired
-    private DashboardService service;
+    private DashboardService dashboardService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/{id}")
     public DashboardDto read(@PathVariable(name = "id") UUID id) {
-        return service.getDashboard(id);
+        userService.checkUser(id);
+        return dashboardService.getDashboard(id);
     }
 
 

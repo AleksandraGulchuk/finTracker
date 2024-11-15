@@ -12,4 +12,6 @@ public interface IncomeRepository extends JpaRepository<Income, UUID> {
 
     List<Income> findAllByUserAccountIdOrderByDateDesc(UUID userAccountId);
 
+    Income save(Income income);
+
 }

@@ -4,11 +4,9 @@ import org.nure.fintracker.dto.DashboardDto;
 import org.nure.fintracker.dto.TransactionDto;
 import org.nure.fintracker.entity.Expense;
 import org.nure.fintracker.entity.Income;
-import org.nure.fintracker.exception.EntityNotFoundException;
 import org.nure.fintracker.mapper.TransactionMapper;
 import org.nure.fintracker.repository.ExpenseRepository;
 import org.nure.fintracker.repository.IncomeRepository;
-import org.nure.fintracker.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +20,6 @@ import java.util.stream.Stream;
 public class DashboardService {
 
     @Autowired
-    private UserAccountRepository userAccountRepository;
-    @Autowired
     private ExpenseRepository expenseRepository;
     @Autowired
     private IncomeRepository incomeRepository;
@@ -32,7 +28,6 @@ public class DashboardService {
 
 
     public DashboardDto getDashboard(UUID id) {
-        checkUser(id);
         List<Expense> expenses = expenseRepository.findAllByUserAccountIdOrderByDateDesc(id);
         List<Income> incomes = incomeRepository.findAllByUserAccountIdOrderByDateDesc(id);
 
@@ -73,9 +68,5 @@ public class DashboardService {
                 .orElse(new BigDecimal(0));
     }
 
-    private void checkUser(UUID id) {
-        userAccountRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with id: " + id + " not found"));
-    }
+
 }
