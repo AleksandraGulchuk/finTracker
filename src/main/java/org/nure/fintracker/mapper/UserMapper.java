@@ -1,7 +1,7 @@
 package org.nure.fintracker.mapper;
 
-import org.nure.fintracker.dto.user.UserSetupDto;
-import org.nure.fintracker.entity.UserAccount;
+import org.nure.fintracker.model.dto.user.UserSetupDto;
+import org.nure.fintracker.model.entity.UserAccount;
 import org.springframework.stereotype.Component;
 
 @Component

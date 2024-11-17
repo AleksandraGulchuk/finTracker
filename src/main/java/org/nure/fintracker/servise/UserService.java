@@ -1,8 +1,8 @@
 package org.nure.fintracker.servise;
 
-import org.nure.fintracker.dto.user.UserLoginDto;
-import org.nure.fintracker.dto.user.UserSetupDto;
-import org.nure.fintracker.entity.UserAccount;
+import org.nure.fintracker.model.dto.user.UserLoginDto;
+import org.nure.fintracker.model.dto.user.UserSetupDto;
+import org.nure.fintracker.model.entity.UserAccount;
 import org.nure.fintracker.exception.EntityAlreadyExistsException;
 import org.nure.fintracker.exception.EntityNotFoundException;
 import org.nure.fintracker.mapper.UserMapper;

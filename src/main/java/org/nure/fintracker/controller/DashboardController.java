@@ -1,6 +1,6 @@
 package org.nure.fintracker.controller;
 
-import org.nure.fintracker.dto.DashboardDto;
+import org.nure.fintracker.model.dto.dashboard.DashboardDto;
 import org.nure.fintracker.servise.DashboardService;
 import org.nure.fintracker.servise.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

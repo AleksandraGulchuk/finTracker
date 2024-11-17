@@ -1,8 +1,7 @@
 package org.nure.fintracker.controller;
 
-import jakarta.validation.Valid;
-import org.nure.fintracker.dto.user.UserLoginDto;
-import org.nure.fintracker.dto.user.UserSetupDto;
+import org.nure.fintracker.model.dto.user.UserLoginDto;
+import org.nure.fintracker.model.dto.user.UserSetupDto;
 import org.nure.fintracker.servise.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

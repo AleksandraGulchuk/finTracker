@@ -1,9 +1,9 @@
 package org.nure.fintracker.servise;
 
-import org.nure.fintracker.dto.DashboardDto;
-import org.nure.fintracker.dto.TransactionDto;
-import org.nure.fintracker.entity.Expense;
-import org.nure.fintracker.entity.Income;
+import org.nure.fintracker.model.dto.dashboard.DashboardDto;
+import org.nure.fintracker.model.dto.transaction.TransactionDto;
+import org.nure.fintracker.model.entity.Expense;
+import org.nure.fintracker.model.entity.Income;
 import org.nure.fintracker.mapper.TransactionMapper;
 import org.nure.fintracker.repository.ExpenseRepository;
 import org.nure.fintracker.repository.IncomeRepository;

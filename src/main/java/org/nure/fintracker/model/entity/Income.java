@@ -1,4 +1,4 @@
-package org.nure.fintracker.entity;
+package org.nure.fintracker.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Expense {
+public class Income {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,7 +32,7 @@ public class Expense {
     @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
     @ManyToOne
-    @JoinColumn(name = "expense_category_id")
-    private ExpenseCategory expenseCategory;
+    @JoinColumn(name = "income_category_id")
+    private IncomeCategory incomeCategory;
 
 }

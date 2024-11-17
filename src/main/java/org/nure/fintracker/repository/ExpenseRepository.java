@@ -1,6 +1,6 @@
 package org.nure.fintracker.repository;
 
-import org.nure.fintracker.entity.Expense;
+import org.nure.fintracker.model.entity.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

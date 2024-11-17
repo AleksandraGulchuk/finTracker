@@ -1,11 +1,11 @@
 package org.nure.fintracker.servise;
 
 import lombok.extern.slf4j.Slf4j;
-import org.nure.fintracker.dto.TransactionDto;
-import org.nure.fintracker.dto.category.CategoryDto;
-import org.nure.fintracker.dto.income.IncomeDto;
-import org.nure.fintracker.dto.income.SummaryDto;
-import org.nure.fintracker.entity.Income;
+import org.nure.fintracker.model.dto.transaction.TransactionDto;
+import org.nure.fintracker.model.dto.category.CategoryDto;
+import org.nure.fintracker.model.dto.transaction.IncomeDto;
+import org.nure.fintracker.model.dto.transaction.SummaryDto;
+import org.nure.fintracker.model.entity.Income;
 import org.nure.fintracker.mapper.CategoryMapper;
 import org.nure.fintracker.mapper.TransactionMapper;
 import org.nure.fintracker.repository.IncomeCategoryRepository;
@@ -47,9 +47,13 @@ public class IncomeService {
                 .build();
     }
 
-    public UUID create(IncomeDto dto) {
+    public UUID createIncome(IncomeDto dto) {
         Income income = transactionMapper.dtoToIncome(dto);
         return incomeRepository.save(income).getId();
+    }
+
+    public void deleteIncome(UUID incomeId){
+        incomeRepository.deleteById(incomeId);
     }
 
     private Map<String, BigDecimal> getSummary(List<TransactionDto> transactions) {

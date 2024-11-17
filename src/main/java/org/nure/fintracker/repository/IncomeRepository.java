@@ -1,6 +1,6 @@
 package org.nure.fintracker.repository;
 
-import org.nure.fintracker.entity.Income;
+import org.nure.fintracker.model.entity.Income;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +12,6 @@ public interface IncomeRepository extends JpaRepository<Income, UUID> {
 
     List<Income> findAllByUserAccountIdOrderByDateDesc(UUID userAccountId);
 
-    Income save(Income income);
+//    Income save(Income income);
 
 }

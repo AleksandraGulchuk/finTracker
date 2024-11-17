@@ -1,4 +1,4 @@
-package org.nure.fintracker.dto.income;
+package org.nure.fintracker.model.dto.transaction;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +9,11 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class IncomeDto {
+public class TransactionDto {
 
-    private UUID userId;
-    private UUID categoryId;
+    private UUID id;
+    private String type;
+    private String category;
     private LocalDate date;
     private BigDecimal amount;
     private String description;

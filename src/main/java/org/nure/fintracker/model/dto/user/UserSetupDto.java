@@ -1,4 +1,4 @@
-package org.nure.fintracker.dto.user;
+package org.nure.fintracker.model.dto.user;
 
 import lombok.Builder;
 import lombok.Data;

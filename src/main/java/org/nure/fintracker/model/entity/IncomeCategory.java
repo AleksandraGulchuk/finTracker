@@ -1,4 +1,4 @@
-package org.nure.fintracker.entity;
+package org.nure.fintracker.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExpenseCategory {
+public class IncomeCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

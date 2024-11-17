@@ -1,4 +1,4 @@
-package org.nure.fintracker.dto.category;
+package org.nure.fintracker.model.dto.category;
 
 import lombok.Builder;
 import lombok.Data;

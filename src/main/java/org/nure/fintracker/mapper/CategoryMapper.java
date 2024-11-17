@@ -1,8 +1,8 @@
 package org.nure.fintracker.mapper;
 
-import org.nure.fintracker.dto.category.CategoryDto;
-import org.nure.fintracker.entity.ExpenseCategory;
-import org.nure.fintracker.entity.IncomeCategory;
+import org.nure.fintracker.model.dto.category.CategoryDto;
+import org.nure.fintracker.model.entity.ExpenseCategory;
+import org.nure.fintracker.model.entity.IncomeCategory;
 import org.springframework.stereotype.Component;
 
 @Component

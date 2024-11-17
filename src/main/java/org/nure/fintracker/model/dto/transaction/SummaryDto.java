@@ -1,9 +1,8 @@
-package org.nure.fintracker.dto.income;
+package org.nure.fintracker.model.dto.transaction;
 
 import lombok.Builder;
 import lombok.Data;
-import org.nure.fintracker.dto.TransactionDto;
-import org.nure.fintracker.dto.category.CategoryDto;
+import org.nure.fintracker.model.dto.category.CategoryDto;
 
 import java.math.BigDecimal;
 import java.util.List;
