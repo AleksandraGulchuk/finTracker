@@ -2,7 +2,7 @@ package org.nure.fintracker.controller;
 
 import org.nure.fintracker.model.dto.transaction.SummaryDto;
 import org.nure.fintracker.model.dto.transaction.TransactionSaveDto;
-import org.nure.fintracker.servise.IncomeService;
+import org.nure.fintracker.servise.ExpenseService;
 import org.nure.fintracker.servise.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -18,31 +18,31 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/incomes")
+@RequestMapping("/expenses")
 @CrossOrigin
 @Validated
-public class IncomeController {
+public class ExpenseController {
 
     @Autowired
-    private IncomeService incomeService;
+    private ExpenseService expenseService;
     @Autowired
     UserService userService;
 
     @GetMapping("/{id}")
     public SummaryDto getSummary(@PathVariable(name = "id") UUID id) {
         userService.checkUser(id);
-        return incomeService.getSummary(id);
+        return expenseService.getSummary(id);
     }
 
     @PostMapping("/create")
     public UUID login(@RequestBody TransactionSaveDto income) {
         userService.checkUser(income.getUserId());
-        return incomeService.createIncome(income);
+        return expenseService.createIncome(income);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name = "id") UUID id) {
-        incomeService.deleteIncome(id);
+        expenseService.deleteIncome(id);
     }
 
 }

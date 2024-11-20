@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
 
     List<Expense> findAllByUserAccountIdOrderByDateDesc(UUID userAccountId);
+
 }

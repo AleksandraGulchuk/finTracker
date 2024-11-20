@@ -1,8 +1,9 @@
 package org.nure.fintracker.mapper;
 
 import org.nure.fintracker.model.dto.transaction.TransactionDto;
-import org.nure.fintracker.model.dto.transaction.IncomeDto;
+import org.nure.fintracker.model.dto.transaction.TransactionSaveDto;
 import org.nure.fintracker.model.entity.Expense;
+import org.nure.fintracker.model.entity.ExpenseCategory;
 import org.nure.fintracker.model.entity.Income;
 import org.nure.fintracker.model.entity.IncomeCategory;
 import org.nure.fintracker.model.entity.UserAccount;
@@ -33,10 +34,20 @@ public class TransactionMapper {
                 .build();
     }
 
-    public Income dtoToIncome(IncomeDto dto) {
+    public Income dtoToIncome(TransactionSaveDto dto) {
         return Income.builder()
                 .userAccount(UserAccount.builder().id(dto.getUserId()).build())
                 .incomeCategory(IncomeCategory.builder().id(dto.getCategoryId()).build())
+                .amount(dto.getAmount())
+                .date(dto.getDate())
+                .description(dto.getDescription())
+                .build();
+    }
+
+    public Expense dtoToExpense(TransactionSaveDto dto) {
+        return Expense.builder()
+                .userAccount(UserAccount.builder().id(dto.getUserId()).build())
+                .expenseCategory(ExpenseCategory.builder().id(dto.getCategoryId()).build())
                 .amount(dto.getAmount())
                 .date(dto.getDate())
                 .description(dto.getDescription())

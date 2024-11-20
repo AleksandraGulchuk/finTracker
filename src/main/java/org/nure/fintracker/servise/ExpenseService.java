@@ -7,9 +7,9 @@ import org.nure.fintracker.model.dto.category.CategoryDto;
 import org.nure.fintracker.model.dto.transaction.SummaryDto;
 import org.nure.fintracker.model.dto.transaction.TransactionDto;
 import org.nure.fintracker.model.dto.transaction.TransactionSaveDto;
-import org.nure.fintracker.model.entity.Income;
-import org.nure.fintracker.repository.IncomeCategoryRepository;
-import org.nure.fintracker.repository.IncomeRepository;
+import org.nure.fintracker.model.entity.Expense;
+import org.nure.fintracker.repository.ExpenseCategoryRepository;
+import org.nure.fintracker.repository.ExpenseRepository;
 import org.nure.fintracker.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +24,14 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class IncomeService {
+public class ExpenseService {
 
     @Autowired
     private UserAccountRepository userAccountRepository;
     @Autowired
-    private IncomeRepository incomeRepository;
+    private ExpenseRepository expenseRepository;
     @Autowired
-    private IncomeCategoryRepository incomeCategoryRepository;
+    private ExpenseCategoryRepository expenseCategoryRepository;
     @Autowired
     private TransactionMapper transactionMapper;
     @Autowired
@@ -48,12 +48,12 @@ public class IncomeService {
     }
 
     public UUID createIncome(TransactionSaveDto dto) {
-        Income income = transactionMapper.dtoToIncome(dto);
-        return incomeRepository.save(income).getId();
+        Expense expense = transactionMapper.dtoToExpense(dto);
+        return expenseRepository.save(expense).getId();
     }
 
     public void deleteIncome(UUID incomeId) {
-        incomeRepository.deleteById(incomeId);
+        expenseRepository.deleteById(incomeId);
     }
 
     private Map<String, BigDecimal> getSummary(List<TransactionDto> transactions) {
@@ -82,18 +82,18 @@ public class IncomeService {
     }
 
     private List<CategoryDto> getCategories() {
-        return incomeCategoryRepository
+        return expenseCategoryRepository
                 .findAll()
                 .stream()
-                .map(c -> categoryMapper.incomeCategoryToDto(c))
+                .map(c -> categoryMapper.expenseCategoryToDto(c))
                 .toList();
     }
 
     private List<TransactionDto> getTransactions(UUID id) {
-        return incomeRepository
+        return expenseRepository
                 .findAllByUserAccountIdOrderByDateDesc(id)
                 .stream()
-                .map(i -> transactionMapper.incomeToDto(i))
+                .map(i -> transactionMapper.expenseToDto(i))
                 .toList();
     }
 

@@ -13,10 +13,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, UUID> 
 
     Optional<UserAccount> findByEmail(String email);
 
-//    Optional<UserAccount> findById(UUID id);
-
     @Query("SELECT u.id FROM UserAccount u WHERE u.email = :email and u.password = :password")
     Optional<UUID> findIdByEmailAndPassword(String email, String password);
 
-//    UserAccount save(UserAccount userAccount);
 }

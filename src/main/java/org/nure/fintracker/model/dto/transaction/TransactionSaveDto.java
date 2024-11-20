@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class IncomeDto {
+public class TransactionSaveDto {
 
     private UUID userId;
     private UUID categoryId;
