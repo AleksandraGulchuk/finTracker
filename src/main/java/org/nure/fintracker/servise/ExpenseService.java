@@ -11,13 +11,11 @@ import org.nure.fintracker.model.entity.Expense;
 import org.nure.fintracker.repository.ExpenseCategoryRepository;
 import org.nure.fintracker.repository.ExpenseRepository;
 import org.nure.fintracker.repository.UserAccountRepository;
+import org.nure.fintracker.util.SummaryCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -40,10 +38,11 @@ public class ExpenseService {
 
     public SummaryDto getSummary(UUID id) {
         List<TransactionDto> transactions = getTransactions(id);
+        Map<String, BigDecimal> summary = SummaryCalculator.getTransactionsSummary(transactions);
         return SummaryDto.builder()
                 .transactions(transactions)
                 .categories(getCategories())
-                .summary(getSummary(transactions))
+                .summary(summary)
                 .build();
     }
 
@@ -54,31 +53,6 @@ public class ExpenseService {
 
     public void deleteIncome(UUID incomeId) {
         expenseRepository.deleteById(incomeId);
-    }
-
-    private Map<String, BigDecimal> getSummary(List<TransactionDto> transactions) {
-        LocalDate currentDate = LocalDate.now();
-        Month current = currentDate.getMonth();
-        Month past = current.minus(6);
-        List<TransactionDto> transactionDtos = transactions.stream()
-                .filter(t -> t.getDate().getMonth().getValue() > past.getValue())
-                .toList();
-
-        return bindMap(transactionDtos);
-    }
-
-    private Map<String, BigDecimal> bindMap(List<TransactionDto> transactions) {
-        Map<String, BigDecimal> bindMap = new HashMap<>();
-        for (TransactionDto transaction : transactions) {
-            String month = transaction.getDate().getMonth().toString();
-            if (bindMap.containsKey(month)) {
-                BigDecimal total = bindMap.get(month).add(transaction.getAmount());
-                bindMap.put(month, total);
-            } else {
-                bindMap.put(month, transaction.getAmount());
-            }
-        }
-        return bindMap;
     }
 
     private List<CategoryDto> getCategories() {
