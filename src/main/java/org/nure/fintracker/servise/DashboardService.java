@@ -1,12 +1,13 @@
 package org.nure.fintracker.servise;
 
+import org.nure.fintracker.mapper.TransactionMapper;
 import org.nure.fintracker.model.dto.dashboard.DashboardDto;
 import org.nure.fintracker.model.dto.transaction.TransactionDto;
 import org.nure.fintracker.model.entity.Expense;
 import org.nure.fintracker.model.entity.Income;
-import org.nure.fintracker.mapper.TransactionMapper;
 import org.nure.fintracker.repository.ExpenseRepository;
 import org.nure.fintracker.repository.IncomeRepository;
+import org.nure.fintracker.util.SummaryCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,7 @@ public class DashboardService {
                 .incomeAmount(incomeAmount)
                 .balance(balance)
                 .transactions(transactions)
+                .balanceHistory(SummaryCalculator.getBalanceHistory(incomeDtos, expenseDtos))
                 .build();
     }
 
