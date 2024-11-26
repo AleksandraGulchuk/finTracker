@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +28,10 @@ public class SummaryCalculator {
                 .filter(t -> t.getDate().getMonth().getValue() > past.getValue())
                 .toList();
 
-        return bindMap(transactionDtos);
+        return bindTransactionsSummaryMap(transactionDtos);
     }
 
-    private static Map<String, BigDecimal> bindMap(List<TransactionDto> transactions) {
+    private static Map<String, BigDecimal> bindTransactionsSummaryMap(List<TransactionDto> transactions) {
         Map<String, BigDecimal> bindMap = new HashMap<>();
         for (TransactionDto transaction : transactions) {
             String month = transaction.getDate().getMonth().toString();
@@ -45,24 +46,20 @@ public class SummaryCalculator {
     }
 
     private static Map<String, BigDecimal> calculateBalances(Map<String, BigDecimal> incomesSummary, Map<String, BigDecimal> expenseSummary) {
-        Map<String, BigDecimal> balanceHistory = new HashMap<>();
+        Map<String, BigDecimal> balanceHistory = new LinkedHashMap<>();
         LocalDate currentDate = LocalDate.now();
         Month current = currentDate.getMonth();
         Month past = current.minus(PERIOD);
         for (int i = 1; i < 7; i++) {
             String month = past.plus(i).toString();
-            if (incomesSummary.containsKey(month)) {
-                if (expenseSummary.containsKey(month)) {
-                    balanceHistory.put(month, incomesSummary.get(month).subtract(expenseSummary.get(month)));
-                } else {
-                    balanceHistory.put(month, incomesSummary.get(month));
-                }
+            if (incomesSummary.containsKey(month) && expenseSummary.containsKey(month)) {
+                balanceHistory.put(month, incomesSummary.get(month).subtract(expenseSummary.get(month)));
+            } else if (incomesSummary.containsKey(month) && !expenseSummary.containsKey(month)) {
+                balanceHistory.put(month, incomesSummary.get(month));
+            } else if (!incomesSummary.containsKey(month) && expenseSummary.containsKey(month)) {
+                balanceHistory.put(month, new BigDecimal("0.00").subtract(expenseSummary.get(month)));
             } else {
-                if (expenseSummary.containsKey(month)) {
-                    balanceHistory.put(month, new BigDecimal("0.00").subtract(expenseSummary.get(month)));
-                } else {
-                    balanceHistory.put(month, new BigDecimal("0.00"));
-                }
+                balanceHistory.put(month, new BigDecimal("0.00"));
             }
         }
         return balanceHistory;
