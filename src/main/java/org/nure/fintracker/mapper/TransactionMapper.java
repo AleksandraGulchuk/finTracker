@@ -9,6 +9,8 @@ import org.nure.fintracker.model.entity.IncomeCategory;
 import org.nure.fintracker.model.entity.UserAccount;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TransactionMapper {
 
@@ -23,6 +25,12 @@ public class TransactionMapper {
                 .build();
     }
 
+    public List<TransactionDto> expensesToDto(List<Expense> expenses) {
+        return expenses.stream()
+                .map(this::expenseToDto)
+                .toList();
+    }
+
     public TransactionDto incomeToDto(Income income) {
         return TransactionDto.builder()
                 .id(income.getId())
@@ -32,6 +40,12 @@ public class TransactionMapper {
                 .amount(income.getAmount())
                 .description(income.getDescription())
                 .build();
+    }
+
+    public List<TransactionDto> incomesToDto(List<Income> incomes) {
+        return incomes.stream()
+                .map(this::incomeToDto)
+                .toList();
     }
 
     public Income dtoToIncome(TransactionSaveDto dto) {

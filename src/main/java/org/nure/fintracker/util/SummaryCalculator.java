@@ -20,17 +20,12 @@ public class SummaryCalculator {
         return calculateBalances(incomesSummary, expensesSummary);
     }
 
+    //TODO: refactor, move getTransactionsForPeriod (25, 26) to the services logic
     public static Map<String, BigDecimal> getTransactionsSummary(List<TransactionDto> transactions) {
         Month startPeriodMonth = getStartPeriodMonth();
-        List<TransactionDto> transactionDtos = transactions.stream()
-                .filter(t -> t.getDate().getMonth().getValue() > startPeriodMonth.getValue())
-                .toList();
-        return bindTransactionsSummaryMap(transactionDtos);
-    }
-
-    private static Map<String, BigDecimal> bindTransactionsSummaryMap(List<TransactionDto> transactions) {
+        List<TransactionDto> transactionDtos = getTransactionsForPeriod(transactions, startPeriodMonth);
         Map<String, BigDecimal> bindMap = new HashMap<>();
-        for (TransactionDto transaction : transactions) {
+        for (TransactionDto transaction : transactionDtos) {
             String month = transaction.getDate().getMonth().toString();
             if (bindMap.containsKey(month)) {
                 BigDecimal total = bindMap.get(month).add(transaction.getAmount());
@@ -40,6 +35,12 @@ public class SummaryCalculator {
             }
         }
         return fillEmptyMonths(bindMap);
+    }
+
+    public static List<TransactionDto> getTransactionsForPeriod(List<TransactionDto> transactions, Month startPeriodMonth) {
+        return transactions.stream()
+                .filter(t -> t.getDate().getMonth().getValue() > startPeriodMonth.getValue())
+                .toList();
     }
 
     private static Map<String, BigDecimal> fillEmptyMonths(Map<String, BigDecimal> transactionsSummary) {
