@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -55,19 +57,29 @@ public class DashboardService {
                 .balanceHistory(SummaryCalculator.getBalanceHistory(incomeDtos, expenseDtos))
                 .build();
     }
-
+    //TODO: make 1 function for Income and Expense, use TransactionDto
     private static BigDecimal getIncomeAmount(List<Income> incomes) {
+        Month startPeriodMonth = getStartPeriodMonth();
         return incomes.stream()
+                .filter(t -> t.getDate().getMonth().getValue() > startPeriodMonth.getValue())
                 .map(Income::getAmount)
                 .reduce(BigDecimal::add)
                 .orElse(new BigDecimal(0));
     }
 
     private static BigDecimal getExpenseAmount(List<Expense> exceptions) {
+        Month startPeriodMonth = getStartPeriodMonth();
         return exceptions.stream()
+                .filter(t -> t.getDate().getMonth().getValue() > startPeriodMonth.getValue())
                 .map(Expense::getAmount)
                 .reduce(BigDecimal::add)
                 .orElse(new BigDecimal(0));
+    }
+
+    private static Month getStartPeriodMonth() {
+        LocalDate currentDate = LocalDate.now();
+        Month current = currentDate.getMonth();
+        return current.minus(6);
     }
 
 
