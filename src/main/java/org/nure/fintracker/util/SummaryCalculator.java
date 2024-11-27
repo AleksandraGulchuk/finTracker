@@ -59,17 +59,19 @@ public class SummaryCalculator {
     private static Map<String, BigDecimal> calculateBalances(Map<String, BigDecimal> incomesSummary, Map<String, BigDecimal> expenseSummary) {
         Map<String, BigDecimal> balanceHistory = new LinkedHashMap<>();
         Month startPeriodMonth = getStartPeriodMonth();
+        BigDecimal balanceStorage = new BigDecimal("0.00");
         for (int i = 1; i < 7; i++) {
             String month = startPeriodMonth.plus(i).toString();
+            BigDecimal balance = new BigDecimal("0.00");
             if (incomesSummary.containsKey(month) && expenseSummary.containsKey(month)) {
-                balanceHistory.put(month, incomesSummary.get(month).subtract(expenseSummary.get(month)));
+                balance = balanceStorage.add(incomesSummary.get(month)).subtract(expenseSummary.get(month));
             } else if (incomesSummary.containsKey(month) && !expenseSummary.containsKey(month)) {
-                balanceHistory.put(month, incomesSummary.get(month));
+                balance = balanceStorage.add(incomesSummary.get(month));
             } else if (!incomesSummary.containsKey(month) && expenseSummary.containsKey(month)) {
-                balanceHistory.put(month, new BigDecimal("0.00").subtract(expenseSummary.get(month)));
-            } else {
-                balanceHistory.put(month, new BigDecimal("0.00"));
+                balance = balance.subtract(expenseSummary.get(month));
             }
+            balanceHistory.put(month, balance);
+            balanceStorage = balance;
         }
         return balanceHistory;
     }
