@@ -21,13 +21,10 @@ public class SummaryCalculator {
     }
 
     public static Map<String, BigDecimal> getTransactionsSummary(List<TransactionDto> transactions) {
-        LocalDate currentDate = LocalDate.now();
-        Month current = currentDate.getMonth();
-        Month past = current.minus(PERIOD);
+        Month startPeriodMonth = getStartPeriodMonth();
         List<TransactionDto> transactionDtos = transactions.stream()
-                .filter(t -> t.getDate().getMonth().getValue() > past.getValue())
+                .filter(t -> t.getDate().getMonth().getValue() > startPeriodMonth.getValue())
                 .toList();
-
         return bindTransactionsSummaryMap(transactionDtos);
     }
 
@@ -42,16 +39,28 @@ public class SummaryCalculator {
                 bindMap.put(month, transaction.getAmount());
             }
         }
-        return bindMap;
+        return fillEmptyMonths(bindMap);
+    }
+
+    private static Map<String, BigDecimal> fillEmptyMonths(Map<String, BigDecimal> transactionsSummary) {
+        Map<String, BigDecimal> map = new LinkedHashMap<>();
+        Month startPeriodMonth = getStartPeriodMonth();
+        for (int i = 1; i < 7; i++) {
+            String month = startPeriodMonth.plus(i).toString();
+            if (transactionsSummary.containsKey(month)) {
+                map.put(month, transactionsSummary.get(month));
+            } else {
+                map.put(month, new BigDecimal("0.00"));
+            }
+        }
+        return map;
     }
 
     private static Map<String, BigDecimal> calculateBalances(Map<String, BigDecimal> incomesSummary, Map<String, BigDecimal> expenseSummary) {
         Map<String, BigDecimal> balanceHistory = new LinkedHashMap<>();
-        LocalDate currentDate = LocalDate.now();
-        Month current = currentDate.getMonth();
-        Month past = current.minus(PERIOD);
+        Month startPeriodMonth = getStartPeriodMonth();
         for (int i = 1; i < 7; i++) {
-            String month = past.plus(i).toString();
+            String month = startPeriodMonth.plus(i).toString();
             if (incomesSummary.containsKey(month) && expenseSummary.containsKey(month)) {
                 balanceHistory.put(month, incomesSummary.get(month).subtract(expenseSummary.get(month)));
             } else if (incomesSummary.containsKey(month) && !expenseSummary.containsKey(month)) {
@@ -63,6 +72,12 @@ public class SummaryCalculator {
             }
         }
         return balanceHistory;
+    }
+
+    private static Month getStartPeriodMonth() {
+        LocalDate currentDate = LocalDate.now();
+        Month current = currentDate.getMonth();
+        return current.minus(PERIOD);
     }
 
 }
